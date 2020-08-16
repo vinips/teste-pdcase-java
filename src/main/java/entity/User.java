@@ -10,7 +10,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
-import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
 
 /**
@@ -55,9 +54,6 @@ public class User implements Serializable {
 
 	@Column(name = "PHONE")
 	private String phone;
-
-	@Transient
-	private String stRepeatedPassword;
 
 	public Integer getId() {
 		return id;
@@ -131,13 +127,6 @@ public class User implements Serializable {
 		this.phone = phone;
 	}
 
-	public String getStRepeatedPassword() {
-		return stRepeatedPassword;
-	}
-
-	public void setStRepeatedPassword(String stRepeatedPassword) {
-		this.stRepeatedPassword = stRepeatedPassword;
-	}
 	
 	
 //	public static User getUser(UserRest userRest) {		
