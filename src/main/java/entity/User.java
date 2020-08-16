@@ -10,14 +10,14 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
-import javax.persistence.Transient;
+import javax.persistence.UniqueConstraint;
 
 /**
  * @author Vinícius Pedro da Silveira
  */
 
 @Entity
-@Table(name = "USERS")//The Word "USER" is a Reserved word on postgreSQL, so i had to use in plural.
+@Table(name = "USERS", uniqueConstraints = @UniqueConstraint(columnNames = "USERNAME"))//The Word "USER" is a Reserved word on postgreSQL, so i had to use in plural.
 public class User implements Serializable {
 
 	/**
@@ -35,9 +35,9 @@ public class User implements Serializable {
 	private String username;
 
 	@Column(name = "PASSWORD")
-	private byte[] password;
+	private String password;
 
-	@Column(name = "STATUS")
+	@Column(name = "IS_ENABLED")
 	private Boolean status;
 
 	@Column(name = "REGISTER_DATE")
@@ -55,18 +55,6 @@ public class User implements Serializable {
 	@Column(name = "PHONE")
 	private String phone;
 
-	@Column(name = "BY_KEY")
-	private byte[] by_key;
-
-	@Column(name = "BY_IV")
-	private byte[] by_iv;
-
-	@Transient
-	private String stPassword;
-
-	@Transient
-	private String stRepeatedPassword;
-
 	public Integer getId() {
 		return id;
 	}
@@ -83,11 +71,11 @@ public class User implements Serializable {
 		this.username = username;
 	}
 
-	public byte[] getPassword() {
+	public String getPassword() {
 		return password;
 	}
 
-	public void setPassword(byte[] password) {
+	public void setPassword(String password) {
 		this.password = password;
 	}
 
@@ -138,38 +126,5 @@ public class User implements Serializable {
 	public void setPhone(String phone) {
 		this.phone = phone;
 	}
-
-	public byte[] getBy_key() {
-		return by_key;
-	}
-
-	public void setBy_key(byte[] by_key) {
-		this.by_key = by_key;
-	}
-
-	public byte[] getBy_iv() {
-		return by_iv;
-	}
-
-	public void setBy_iv(byte[] by_iv) {
-		this.by_iv = by_iv;
-	}
-
-	public String getStPassword() {
-		return stPassword;
-	}
-
-	public void setStPassword(String stPassword) {
-		this.stPassword = stPassword;
-	}
-
-	public String getStRepeatedPassword() {
-		return stRepeatedPassword;
-	}
-
-	public void setStRepeatedPassword(String stRepeatedPassword) {
-		this.stRepeatedPassword = stRepeatedPassword;
-	}
-
 	
 }
