@@ -1,52 +1,39 @@
-package rest.object;
+package dto;
 
+import java.io.Serializable;
 import java.util.Date;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonProperty;
-
 /**
- * @author  Vinicius Pedro da Silveira
+ * @author Vinicius Pedro da Silveira
  */
 
-@JsonIgnoreProperties(ignoreUnknown = true)
-public class UserRest {
-	
-	
-	@JsonProperty("id")
-	private String id;
-	
-	@JsonProperty("username")
-    private String username;
-	
-	@JsonProperty("password")
-	private String password;
-	
-	@JsonProperty("status")
-	private String status;
+public class UserDTO implements Serializable {
+	private static final long serialVersionUID = 1L;
 
-    @JsonProperty("register_date")
-    private Date register_date;
-    
-    @JsonProperty("name")
-    private String name;
-    
-    @JsonProperty("surname")
-    private String surname;
-    
-    
-    @JsonProperty("email")
-    private String email;
-    
-	@JsonProperty("phone")
-	private Boolean phone;
+	private String id;
+
+	private String username;
+
+	private String password;
+
+	private Boolean status;
+
+	private Date register_date;
+
+	private String name;
+
+	private String surname;
+
+	private String email;
+
+	private String phone;
 
 	public String getId() {
 		return id;
 	}
-
-	public void setId(String id) {
-		this.id = id;
+	
+	public void setId(Object id) {
+		this.id = id != null ? id.toString() : null;
 	}
 
 	public String getUsername() {
@@ -65,14 +52,14 @@ public class UserRest {
 		this.password = password;
 	}
 
-	public String getStatus() {
+	public Boolean getStatus() {
 		return status;
 	}
 
-	public void setStatus(String status) {
+	public void setStatus(Boolean status) {
 		this.status = status;
 	}
-
+	
 	public Date getRegister_date() {
 		return register_date;
 	}
@@ -105,13 +92,14 @@ public class UserRest {
 		this.email = email;
 	}
 
-	public Boolean getPhone() {
+	public String getPhone() {
 		return phone;
 	}
 
-	public void setPhone(Boolean phone) {
+	public void setPhone(String phone) {
 		this.phone = phone;
 	}
-	
+
+
 	
 }

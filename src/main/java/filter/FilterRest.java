@@ -24,7 +24,7 @@ public class FilterRest implements Filter {
 		HttpServletRequest request = (HttpServletRequest) requestServlet;
 		HttpServletResponse response = (HttpServletResponse) responseServlet;
 
-		response.setHeader("server-header", "WildFly/19");
+		response.setHeader("server-header", "WildFly/16");
 		response.setHeader("x-powered-by-header", "Undertow/1");
 		response.setHeader("Access-Control-Allow-Origin", "*");
 		response.setHeader("Access-Control-Allow-Methods", "GET, POST, OPTIONS, PUT");

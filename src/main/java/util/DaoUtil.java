@@ -13,8 +13,9 @@ public class DaoUtil {
 	private static EntityManagerFactory factory;
 
 	static {
-		if (factory == null)
+		if (factory == null) {
 			factory = Persistence.createEntityManagerFactory("pdcase");
+		}
 	}
 
 	public static EntityManager getEntityManager() {

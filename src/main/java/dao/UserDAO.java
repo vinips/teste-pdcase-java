@@ -1,7 +1,6 @@
 package dao;
 
 import java.math.BigInteger;
-import java.time.LocalDate;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
@@ -9,9 +8,9 @@ import javax.annotation.PostConstruct;
 import org.hibernate.SQLQuery;
 import org.hibernate.transform.Transformers;
 
+import dto.UserDTO;
 import entity.User;
 import util.Filter;
-import util.UserDTO;
 
 /**
  * @author Vinicius Pedro da Silveira
@@ -32,8 +31,6 @@ public class UserDAO extends PersistenceBasic<User> {
 		SQLQuery query = getSQl(username, name, email, filter);
 		query.setResultTransformer(Transformers.aliasToBean(UserDTO.class));
 		List<UserDTO> usersDTO = query.list();
-		
-		//List<User> users = query.list();
 
 		return usersDTO == null ? null : usersDTO;
 	}
@@ -87,7 +84,7 @@ public class UserDAO extends PersistenceBasic<User> {
 					sql.append("u.password ");
 				} else if (filter.getPropertyOrder().equals("is_enabled")) {
 					sql.append("u.is_enabled ");
-				} else if (filter.getPropertyOrder().equals("register_date")) {
+				} else if (filter.getPropertyOrder().equals("registerDate")) {
 					sql.append("u.register_date ");
 				} else if (filter.getPropertyOrder().equals("name")) {
 					sql.append("u.name ");

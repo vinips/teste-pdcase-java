@@ -7,8 +7,8 @@ import javax.ejb.Stateful;
 import javax.inject.Inject;
 
 import dao.UserDAO;
+import dto.UserDTO;
 import util.Filter;
-import util.UserDTO;
 
 /**
  * @author  Vinicius Pedro da Silveira

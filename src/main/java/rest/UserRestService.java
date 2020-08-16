@@ -6,7 +6,6 @@ import java.util.Map;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.ws.rs.Consumes;
-import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
@@ -16,8 +15,6 @@ import javax.ws.rs.core.Response;
 import business.UserBusiness;
 import rest.object.ListRest;
 import util.Filter;
-
-
 
 /**
  * @author  Vinicius Pedro da Silveira
@@ -77,14 +74,13 @@ public class UserRestService {
 				filter.setPropertyOrder(sort);
 			}
 
-			List<Object> listGridDTO;
-			
+			List<Object> listDTO;
 
-			listGridDTO = userBusiness.getAllUsers(mapParams, filter);
+			listDTO = userBusiness.getAllUsers(mapParams, filter);
 			Integer length = userBusiness.searchCount(mapParams);
 
 			ListRest<Object> resultado = new ListRest<Object>();
-			resultado.setList(listGridDTO);
+			resultado.setList(listDTO);
 			resultado.setLength(length);
 
 			return Response.ok().entity(resultado).build();
@@ -93,67 +89,5 @@ public class UserRestService {
 			return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(e.getMessage()).build();
 		}
 	}
-	
-	@POST
-	@Path("/teste")
-	@Consumes(MediaType.APPLICATION_JSON)
-	@Produces(MediaType.APPLICATION_JSON)
-	@SuppressWarnings({ "rawtypes", "unchecked" })
-	public Response getUsers() {
-		try {
-			return Response.ok().build();
-		} catch (Exception e) {
-			e.printStackTrace();
-			return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(e.getMessage()).build();
-		}
-	}
-	
-	@GET
-	@Path("/testeget")
-	@Produces(MediaType.APPLICATION_JSON)
-	@SuppressWarnings({ "rawtypes", "unchecked" })
-	public Response oi() {
-		try {
-			return Response.status(Response.Status.OK).entity("FUNCIONOU").build();
-			//return Response.ok("FUNCIONOU").build();
-		} catch (Exception e) {
-			e.printStackTrace();
-			return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(e.getMessage()).build();
-		}
-	}
-	
-//	@POST
-//	@Path("/register")
-//	@Consumes(MediaType.APPLICATION_JSON)
-//	@Produces(MediaType.APPLICATION_JSON)
-//	public Response registerUser(UserRest uRest) {
-//		
-//		String resultado = "";
-//		try {
-//
-//			resultado = userBusiness.register(User.to);
-//			if (resultado.contains("id:")) {
-//				IdRest id_r = new IdRest();
-//				id_r.setId(resultado.replaceAll("id:", ""));
-//				return Response.ok().entity(id_r).build();
-//			} else {
-//				Erro erro = new Erro();
-//				erro.setDescricao(resultado);
-//				return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(erro).build();
-//			}
-//		} catch (Exception e) {
-//			e.printStackTrace();
-//			return error(e.getMessage());
-//		}
-//		
-//		List<User> users;
-//		try {
-//			users = userBusiness.getAllUsers();
-//		} catch (Exception e) {
-//			users = new ArrayList<User>();
-//			e.printStackTrace();
-//		}
-//		return users;
-//	}
 
 }
