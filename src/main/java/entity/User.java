@@ -11,13 +11,14 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.Transient;
+import javax.persistence.UniqueConstraint;
 
 /**
  * @author Vinícius Pedro da Silveira
  */
 
 @Entity
-@Table(name = "USERS")//The Word "USER" is a Reserved word on postgreSQL, so i had to use in plural.
+@Table(name = "USERS", uniqueConstraints = @UniqueConstraint(columnNames = "USERNAME"))//The Word "USER" is a Reserved word on postgreSQL, so i had to use in plural.
 public class User implements Serializable {
 
 	/**
@@ -35,9 +36,9 @@ public class User implements Serializable {
 	private String username;
 
 	@Column(name = "PASSWORD")
-	private byte[] password;
+	private String password;
 
-	@Column(name = "STATUS")
+	@Column(name = "IS_ENABLED")
 	private Boolean status;
 
 	@Column(name = "REGISTER_DATE")
@@ -54,15 +55,6 @@ public class User implements Serializable {
 
 	@Column(name = "PHONE")
 	private String phone;
-
-	@Column(name = "BY_KEY")
-	private byte[] by_key;
-
-	@Column(name = "BY_IV")
-	private byte[] by_iv;
-
-	@Transient
-	private String stPassword;
 
 	@Transient
 	private String stRepeatedPassword;
@@ -83,11 +75,11 @@ public class User implements Serializable {
 		this.username = username;
 	}
 
-	public byte[] getPassword() {
+	public String getPassword() {
 		return password;
 	}
 
-	public void setPassword(byte[] password) {
+	public void setPassword(String password) {
 		this.password = password;
 	}
 
@@ -139,30 +131,6 @@ public class User implements Serializable {
 		this.phone = phone;
 	}
 
-	public byte[] getBy_key() {
-		return by_key;
-	}
-
-	public void setBy_key(byte[] by_key) {
-		this.by_key = by_key;
-	}
-
-	public byte[] getBy_iv() {
-		return by_iv;
-	}
-
-	public void setBy_iv(byte[] by_iv) {
-		this.by_iv = by_iv;
-	}
-
-	public String getStPassword() {
-		return stPassword;
-	}
-
-	public void setStPassword(String stPassword) {
-		this.stPassword = stPassword;
-	}
-
 	public String getStRepeatedPassword() {
 		return stRepeatedPassword;
 	}
@@ -170,6 +138,113 @@ public class User implements Serializable {
 	public void setStRepeatedPassword(String stRepeatedPassword) {
 		this.stRepeatedPassword = stRepeatedPassword;
 	}
+	
+	
+//	public static User getUser(UserRest userRest) {		
+//		if (userRest == null) {
+//			return null;
+//		}
+//		
+//		 id (int)
+//		 * username (String)
+//		 * password (String)
+//		 * is_enabled (boolean)
+//		 * register_date (Date)
+//		 * name (String)
+//		 * surname (String)
+//		 * email (String)
+//		 * phone (String)
+//
+//		
+//		
+//		User user = new User();
+//		user.setUsername(userRest.);
+//	   if(profissionalRest == null) return null;
+//	   
+//	   Pessoa pessoa = new Pessoa();
+//	   pessoa.setNome(StringUtil.isNotEmpty(profissionalRest.getNome())?profissionalRest.getNome().toUpperCase() : null);
+//		
+//		if (profissionalRest.getContatos().length > 0)
+//		{
+//			pessoa.setTelefones(new ArrayList<Telefone>());
+//			for (ContatoRest contato : profissionalRest.getContatos()) {
+//				Telefone telefone = new Telefone();
+//				if (StringUtil.isNotEmpty(contato.getId())) {
+//					telefone.setId(Long.parseLong(contato.getId()));
+//				}
+//				if (StringUtil.isNotEmpty(contato.getIndex())) {
+//				    telefone.setIndex(Integer.parseInt(contato.getIndex()));
+//				}
+//				if (StringUtil.isNotEmpty(contato.getTipo())) {
+//				    telefone.setTipo(Integer.parseInt(contato.getTipo()));
+//				}
+//				telefone.setNumero(contato.getTelefone());
+//				telefone.setDescricao(contato.getContato());
+//				pessoa.getTelefones().add(telefone);
+//			}
+//		}
+//		
+//		PessoaFisica pessoaFisica = new PessoaFisica();
+//		pessoaFisica.setPessoa(pessoa);
+//		pessoaFisica.setCpf(profissionalRest.getCpf());
+//		pessoaFisica.setEmail(profissionalRest.getEmail());
+//	
+//		Profissional profissional = new Profissional();
+//		profissional.setPessoaFisica(pessoaFisica);
+//		profissional.setJuiz(profissionalRest.getJuiz());
+//		if (StringUtil.isNotEmpty(profissionalRest.getStatus()) && profissionalRest.getStatus().toLowerCase().equals("ativo")) {
+//			profissional.setStatus(true);
+//		} else {
+//			profissional.setStatus(false);
+//		}
+//		
+//		if (profissionalRest.getTipo_registro() != null && StringUtil.isNotEmpty(profissionalRest.getTipo_registro().getId())) {
+//			profissional.setTipoRegistro(new TipoRegistro(Long.parseLong(profissionalRest.getTipo_registro().getId())));
+//			profissional.setNumeroRegistro(profissionalRest.getNumero_registro());
+//		}
+//		
+//		if (profissionalRest.getEspecialidades() != null && profissionalRest.getEspecialidades().length > 0) {
+//			profissional.setEspecialidades(new ArrayList<Especialidade>());
+//			
+//			for (DescricaoRest e : profissionalRest.getEspecialidades()) {
+//				Especialidade especialidade = new Especialidade();
+//				if (StringUtil.isNotEmpty(e.getId())) {
+//					especialidade.setId(Long.parseLong(e.getId()));
+//				}
+//				if (StringUtil.isNotEmpty(e.getDescricao())) {
+//					especialidade.setDescricao(e.getDescricao());
+//				}
+//				profissional.getEspecialidades().add(especialidade);
+//			}
+//		}
+//		if (profissionalRest.getUf() != null) {
+//			profissional.setUf(profissionalRest.getUf());
+//		}
+//		
+//		if (profissionalRest.getEndereco() != null && profissionalRest.getEndereco().getLogradouro() != null) {
+//			Endereco endereco = new Endereco();
+//			
+//			if (profissionalRest.getEndereco() != null && StringUtil.isNotEmpty(profissionalRest.getEndereco().getId())) endereco.setId(Long.parseLong(profissionalRest.getEndereco().getId()));
+//						
+//			endereco.setId_logradouro(profissionalRest.getEndereco() != null && StringUtil.isNotEmpty(profissionalRest.getEndereco().getLogradouro().getId())? Integer.valueOf(profissionalRest.getEndereco().getLogradouro().getId()) : null);
+//			endereco.setComplemento(profissionalRest.getEndereco().getComplemento());
+//			endereco.setLogradouro(profissionalRest.getEndereco().getNome_logradouro());
+//			endereco.setId_zona(StringUtil.isNotEmpty(profissionalRest.getEndereco().getZona())? Integer.parseInt(profissionalRest.getEndereco().getZona()): null);
+//			endereco.setNumero(profissionalRest.getEndereco().getNumero());
+//			endereco.setReferencia(profissionalRest.getEndereco().getReferencia());
+//			endereco.setTipo(StringUtil.isNotEmpty(profissionalRest.getEndereco().getTipo())? Integer.parseInt(profissionalRest.getEndereco().getTipo()): null);
+//						
+//			List<Endereco> enderecos = new ArrayList<Endereco>();
+//			enderecos.add(endereco);
+//			profissional.getPessoaFisica().getPessoa().setEnderecos(enderecos);
+//		}
+//
+//		if (StringUtil.isNotEmpty(profissionalRest.getId()))
+//		{
+//			profissional.setId(Long.parseLong(profissionalRest.getId()));
+//		}
+//		return profissional;
+//	}
 
 	
 }
