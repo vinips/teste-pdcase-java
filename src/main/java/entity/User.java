@@ -128,7 +128,6 @@ public class User implements Serializable {
 	}
 
 	
-	
 //	public static User getUser(UserRest userRest) {		
 //		if (userRest == null) {
 //			return null;

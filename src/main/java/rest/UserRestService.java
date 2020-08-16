@@ -6,6 +6,7 @@ import java.util.Map;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.ws.rs.Consumes;
+import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
@@ -101,6 +102,20 @@ public class UserRestService {
 	public Response getUsers() {
 		try {
 			return Response.ok().build();
+		} catch (Exception e) {
+			e.printStackTrace();
+			return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(e.getMessage()).build();
+		}
+	}
+	
+	@GET
+	@Path("/testeget")
+	@Produces(MediaType.APPLICATION_JSON)
+	@SuppressWarnings({ "rawtypes", "unchecked" })
+	public Response oi() {
+		try {
+			return Response.status(Response.Status.OK).entity("FUNCIONOU").build();
+			//return Response.ok("FUNCIONOU").build();
 		} catch (Exception e) {
 			e.printStackTrace();
 			return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(e.getMessage()).build();

@@ -7,8 +7,8 @@ import javax.ejb.Stateful;
 import javax.inject.Inject;
 
 import dao.UserDAO;
-import entity.User;
 import util.Filter;
+import util.UserDTO;
 
 /**
  * @author  Vinicius Pedro da Silveira
@@ -20,7 +20,7 @@ public class UserBusiness {
 	@Inject
 	private UserDAO repository;
 	
-	public List<User> getAllUsers(Map<String, Object> map, Filter filter) throws Exception {
+	public List<UserDTO> getAllUsers(Map<String, Object> map, Filter filter) throws Exception {
 		String username = (String) map.get("username");
 		String name = (String) map.get("name");
 		String email = (String) map.get("email");

@@ -1,33 +1,41 @@
 package dao;
 
 import java.math.BigInteger;
+import java.time.LocalDate;
 import java.util.List;
+
+import javax.annotation.PostConstruct;
 
 import org.hibernate.SQLQuery;
 import org.hibernate.transform.Transformers;
 
 import entity.User;
 import util.Filter;
+import util.UserDTO;
 
 /**
  * @author Vinicius Pedro da Silveira
  */
 
 public class UserDAO extends PersistenceBasic<User> {
-
+	
 	@Override
-	public void inicialize() {
+	@PostConstruct
+	public void changeClass() {
 		setEntityClass(User.class);
+		
 	}
-
+	
 	@SuppressWarnings("unchecked")
-	public List<User> getAllUsers(String username, String name, String email, Filter filter) throws Exception {
+	public List<UserDTO> getAllUsers(String username, String name, String email, Filter filter) throws Exception {
 
 		SQLQuery query = getSQl(username, name, email, filter);
-		query.setResultTransformer(Transformers.aliasToBean(User.class));
-		List<User> users = query.list();
+		query.setResultTransformer(Transformers.aliasToBean(UserDTO.class));
+		List<UserDTO> usersDTO = query.list();
+		
+		//List<User> users = query.list();
 
-		return users == null ? null : users;
+		return usersDTO == null ? null : usersDTO;
 	}
 
 	public Integer getCountUsers(String username, String name, String email) {
@@ -42,21 +50,30 @@ public class UserDAO extends PersistenceBasic<User> {
 			sql.append("SELECT ");
 
 			if (filter != null) {
-				sql.append("u.* ");
+				sql.append("u.id, ");
+				sql.append("u.username, ");
+				sql.append("u.password, ");
+				sql.append("u.is_enabled as status, ");
+				sql.append("u.register_date, ");
+				sql.append("u.name, ");
+				sql.append("u.surname, ");
+				sql.append("u.email, ");
+				sql.append("u.phone ");
+				
 			} else
 				sql.append("count(u.id) ");
 
 			sql.append("FROM users u ");
 			sql.append("WHERE 1=1 ");
 
-			if (!username.isBlank()) {
-				sql.append("AND u.username LIKE :username ");
+			if (username != null && !username.isBlank()) {
+				sql.append("AND UPPER(u.username) LIKE :username ");
 			}
-			if (!name.isBlank()) {
-				sql.append("AND u.name LIKE :name ");
+			if (name != null && !name.isBlank()) {
+				sql.append("AND UPPER(u.name) LIKE :name ");
 			}
-			if (!email.isBlank()) {
-				sql.append("AND u.email LIKE :email ");
+			if (email != null && !email.isBlank()) {
+				sql.append("AND UPPER(u.email) LIKE :email ");
 			}
 
 			if (filter != null) {
@@ -93,14 +110,14 @@ public class UserDAO extends PersistenceBasic<User> {
 				query.setInteger("first", filter.getFirstRecord());
 			}
 
-			if (!username.isBlank()) {
-				query.setString("username", "%" + username + "%");
+			if (username != null && !username.isBlank()) {
+				query.setString("username", "%" + username.toUpperCase() + "%");
 			}
-			if (!name.isBlank()) {
-				query.setString("name", "%" + name + "%");
+			if (name != null && !name.isBlank()) {
+				query.setString("name", "%" + name.toUpperCase() + "%");
 			}
-			if (!email.isBlank()) {
-				query.setString("email", "%" + email + "%");
+			if (email != null && !email.isBlank()) {
+				query.setString("email", "%" + email.toUpperCase() + "%");
 			}
 
 			return query;
@@ -110,5 +127,6 @@ public class UserDAO extends PersistenceBasic<User> {
 			return null;
 		}
 	}
+
 
 }
